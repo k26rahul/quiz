@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Basic Quiz",
+    "description": "Master the fundamentals of JavaScript with 50 essential questions covering syntax, types, and basic logic.",
+    "slug": "basic-quiz",
+    "category": "JavaScript",
+    "type": "quiz",
+    "dataFile": "js-quiz-basic.json"
+  },
+  {
+    "title": "Advanced Quiz",
+    "description": "Challenge yourself with 50 advanced concepts including closures, prototypes, and asynchronous patterns.",
+    "slug": "advanced-quiz",
+    "category": "JavaScript",
+    "type": "quiz",
+    "dataFile": "js-quiz-advanced.json"
+  },
+  {
+    "title": "Fundamentals Guide",
+    "description": "A comprehensive deep-dive into 25 core concepts that every JavaScript developer should master.",
+    "slug": "fundamentals-guide",
+    "category": "JavaScript",
+    "type": "guide",
+    "dataFile": "js-guide-fundamentals.json"
+  }
+]
