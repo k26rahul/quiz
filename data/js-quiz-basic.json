@@ -1,0 +1,775 @@
+[
+  {
+    "id": 1,
+    "topic": "Variables",
+    "text": "What is the primary scoping difference between `var` and `let`?",
+    "options": [
+      { "id": "a", "text": "`var` is block-scoped, `let` is function-scoped." },
+      { "id": "b", "text": "`var` is function-scoped, `let` is block-scoped." },
+      { "id": "c", "text": "Both are block-scoped, but `let` can be reassigned." },
+      {
+        "id": "d",
+        "text": "There is no scoping difference, only hoisting differences."
+      }
+    ],
+    "correct": "b",
+    "feedback": "`var` is scoped to the nearest function block, whereas `let` and `const` are scoped to the nearest enclosing `{}` block."
+  },
+  {
+    "id": 2,
+    "topic": "Hoisting",
+    "text": "What will be the output of the following code?\n```javascript\nconsole.log(a);\nvar a = 10;\n\nconsole.log(b);\nlet b = 20;\n```",
+    "options": [
+      { "id": "a", "text": "`10`, `20`" },
+      { "id": "b", "text": "`undefined`, `undefined`" },
+      { "id": "c", "text": "`undefined`, `ReferenceError`" },
+      { "id": "d", "text": "`ReferenceError`, `ReferenceError`" }
+    ],
+    "correct": "c",
+    "feedback": "`var` is hoisted and initialized as `undefined`. `let` is hoisted but stays in the Temporal Dead Zone (TDZ), throwing a `ReferenceError` if accessed before declaration."
+  },
+  {
+    "id": 3,
+    "topic": "Data Types",
+    "text": "Which of the following correctly identifies all the primitive data types in JavaScript?",
+    "options": [
+      {
+        "id": "a",
+        "text": "`String`, `Number`, `Boolean`, `Null`, `Undefined`, `Object`"
+      },
+      {
+        "id": "b",
+        "text": "`String`, `Number`, `Boolean`, `Null`, `Undefined`, `Symbol`, `BigInt`"
+      },
+      {
+        "id": "c",
+        "text": "`String`, `Number`, `Boolean`, `Array`, `Object`, `Symbol`"
+      },
+      {
+        "id": "d",
+        "text": "`String`, `Number`, `Boolean`, `Null`, `Undefined`, `Function`"
+      }
+    ],
+    "correct": "b",
+    "feedback": "There are 7 primitives: `String`, `Number`, `Boolean`, `Null`, `Undefined`, `Symbol`, and `BigInt`. Everything else (`Array`, `Function`) is an `Object`."
+  },
+  {
+    "id": 4,
+    "topic": "Data Types",
+    "text": "What does `typeof null` evaluate to?",
+    "options": [
+      { "id": "a", "text": "`'null'`" },
+      { "id": "b", "text": "`'undefined'`" },
+      { "id": "c", "text": "`'object'`" },
+      { "id": "d", "text": "`ReferenceError`" }
+    ],
+    "correct": "c",
+    "feedback": "`typeof null === 'object'`. This is a legacy bug in JS from its earliest days that cannot be fixed without breaking existing code."
+  },
+  {
+    "id": 5,
+    "topic": "Equality",
+    "text": "What is the output of `[] == false` and `[] === false`?",
+    "options": [
+      { "id": "a", "text": "`true`, `true`" },
+      { "id": "b", "text": "`false`, `false`" },
+      { "id": "c", "text": "`true`, `false`" },
+      { "id": "d", "text": "`false`, `true`" }
+    ],
+    "correct": "c",
+    "feedback": "Loose equality `==` coerces `[]` to an empty string `\"\"`, which coerces to `false`, making it `true`. Strict equality `===` checks type (Object vs Boolean), so it is `false`."
+  },
+  {
+    "id": 6,
+    "topic": "Arrays",
+    "text": "What is the most reliable way to check if a variable `myVar` is an array?",
+    "options": [
+      { "id": "a", "text": "`typeof myVar === 'array'`" },
+      { "id": "b", "text": "`myVar instanceof Array`" },
+      { "id": "c", "text": "`Array.isArray(myVar)`" },
+      { "id": "d", "text": "`myVar.length !== undefined`" }
+    ],
+    "correct": "c",
+    "feedback": "`Array.isArray()` is the standard ES5 method. `instanceof` can fail across different iframes/windows, and `typeof` returns `'object'`."
+  },
+  {
+    "id": 7,
+    "topic": "Variables",
+    "text": "If you declare an object with `const`, what are you preventing?",
+    "options": [
+      { "id": "a", "text": "Mutating the object's properties." },
+      {
+        "id": "b",
+        "text": "Reassigning the variable identifier to a new value/reference."
+      },
+      { "id": "c", "text": "Both reassignment and property mutation." },
+      { "id": "d", "text": "Neither, objects cannot be declared with `const`." }
+    ],
+    "correct": "b",
+    "feedback": "`const` prevents *reassignment* of the binding. The object itself remains mutable (you can change its properties). To prevent mutation, use `Object.freeze()`."
+  },
+  {
+    "id": 8,
+    "topic": "Objects",
+    "text": "What is the output of this code?\n```javascript\nconst obj = Object.freeze({ user: { age: 25 } });\nobj.user.age = 30;\nconsole.log(obj.user.age);\n```",
+    "options": [
+      { "id": "a", "text": "`25`" },
+      { "id": "b", "text": "`30`" },
+      { "id": "c", "text": "`TypeError`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "b",
+    "feedback": "`Object.freeze()` is shallow. It freezes the top-level properties, but nested objects (`user`) can still be mutated. Output is `30`."
+  },
+  {
+    "id": 9,
+    "topic": "Equality",
+    "text": "Why does `NaN === NaN` return `false`?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Because one `NaN` might be a string and the other a number."
+      },
+      {
+        "id": "b",
+        "text": "Because `NaN` is an object, and they point to different memory locations."
+      },
+      {
+        "id": "c",
+        "text": "According to IEEE 754 standards, `NaN` is never equal to itself."
+      },
+      { "id": "d", "text": "It returns `true`, not `false`." }
+    ],
+    "correct": "c",
+    "feedback": "`NaN` (Not-A-Number) is uniquely designed to be unequal to everything, including itself. Use `Number.isNaN()` to reliably check for `NaN`."
+  },
+  {
+    "id": 10,
+    "topic": "Data Types",
+    "text": "What is the difference between passing `null` vs `undefined` as a function argument if there is a default parameter?\n```javascript\nfunction greet(name = 'Guest') { console.log(name); }\ngreet(undefined);\ngreet(null);\n```",
+    "options": [
+      { "id": "a", "text": "`Guest`, `Guest`" },
+      { "id": "b", "text": "`undefined`, `null`" },
+      { "id": "c", "text": "`Guest`, `null`" },
+      { "id": "d", "text": "`Guest`, `undefined`" }
+    ],
+    "correct": "c",
+    "feedback": "Default parameters trigger ONLY on `undefined`. Passing `null` explicitly tells JS 'I want this value to be empty', so it uses `null`."
+  },
+  {
+    "id": 11,
+    "topic": "Closures",
+    "text": "What is a closure in JavaScript?",
+    "options": [
+      { "id": "a", "text": "A function that is executed immediately after creation." },
+      {
+        "id": "b",
+        "text": "A function that retains access to its lexical scope, even when executed outside that scope."
+      },
+      {
+        "id": "c",
+        "text": "A block of code completely isolated from the global `window` object."
+      },
+      {
+        "id": "d",
+        "text": "A way to force synchronous execution of asynchronous code."
+      }
+    ],
+    "correct": "b",
+    "feedback": "Closure = Function + Lexical Environment. It 'remembers' the variables from the scope where it was created."
+  },
+  {
+    "id": 12,
+    "topic": "Closures",
+    "text": "What will be printed to the console?\n```javascript\nfunction createCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst c1 = createCounter();\nconst c2 = createCounter();\nc1(); c1();\nconsole.log(c2());\n```",
+    "options": [
+      { "id": "a", "text": "`1`" },
+      { "id": "b", "text": "`2`" },
+      { "id": "c", "text": "`3`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "a",
+    "feedback": "Each call to `createCounter` creates a *new*, independent closure and variable environment. `c1` modifies its own count, `c2` starts fresh at `1`."
+  },
+  {
+    "id": 13,
+    "topic": "this Keyword",
+    "text": "In a regular function call (e.g., `myFunction()`) in 'strict mode', what is the value of `this`?",
+    "options": [
+      { "id": "a", "text": "The global `window` object." },
+      { "id": "b", "text": "`null`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "The function itself." }
+    ],
+    "correct": "c",
+    "feedback": "In sloppy mode, `this` defaults to `window`. In strict mode (`\"use strict\"`), default binding is `undefined`."
+  },
+  {
+    "id": 14,
+    "topic": "this Keyword",
+    "text": "What is the output of the following code?\n```javascript\nconst user = {\n  name: 'Dave',\n  greet: function() {\n    console.log(this.name);\n  }\n};\nconst func = user.greet;\nfunc();\n```",
+    "options": [
+      { "id": "a", "text": "`Dave`" },
+      { "id": "b", "text": "`undefined`" },
+      { "id": "c", "text": "`TypeError`" },
+      { "id": "d", "text": "`window`" }
+    ],
+    "correct": "b",
+    "feedback": "By assigning `user.greet` to `func`, it loses its object context. It is called as a simple function, so `this` is `window` (or `undefined` in strict), resulting in `undefined`."
+  },
+  {
+    "id": 15,
+    "topic": "Arrow Functions",
+    "text": "How does `this` behave inside an arrow function?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It is dynamically scoped based on where the arrow function is called."
+      },
+      { "id": "b", "text": "It always refers to the global object." },
+      {
+        "id": "c",
+        "text": "It is lexically inherited from the enclosing regular function or global scope."
+      },
+      {
+        "id": "d",
+        "text": "It refers to the object the arrow function is a property of."
+      }
+    ],
+    "correct": "c",
+    "feedback": "Arrow functions do NOT have their own `this` binding. They look up the scope chain and use the `this` from the parent scope."
+  },
+  {
+    "id": 16,
+    "topic": "call vs apply",
+    "text": "What is the primary difference between `call()` and `apply()`?",
+    "options": [
+      {
+        "id": "a",
+        "text": "`call` invokes the function immediately, `apply` returns a new function."
+      },
+      {
+        "id": "b",
+        "text": "`call` takes arguments as an array, `apply` takes arguments individually."
+      },
+      {
+        "id": "c",
+        "text": "`call` takes arguments individually, `apply` takes arguments as an array."
+      },
+      { "id": "d", "text": "There is no difference, they are aliases." }
+    ],
+    "correct": "c",
+    "feedback": "Cheat phrase: **A**pply takes an **A**rray. `call(this, arg1, arg2)` vs `apply(this, [arg1, arg2])`."
+  },
+  {
+    "id": 17,
+    "topic": "bind",
+    "text": "What does the `bind()` method return?",
+    "options": [
+      { "id": "a", "text": "The result of executing the function." },
+      {
+        "id": "b",
+        "text": "A new function with its `this` keyword permanently set to the provided value."
+      },
+      { "id": "c", "text": "An object containing the bound arguments." },
+      { "id": "d", "text": "Undefined." }
+    ],
+    "correct": "b",
+    "feedback": "`bind` does not execute the function immediately. It prepares a new function with a fixed `this` context to be called later."
+  },
+  {
+    "id": 18,
+    "topic": "Higher-Order Functions",
+    "text": "Which of the following defines a Higher-Order Function (HOF)?",
+    "options": [
+      { "id": "a", "text": "A function that executes asynchronously." },
+      { "id": "b", "text": "A function that is part of a Class object." },
+      {
+        "id": "c",
+        "text": "A function that takes another function as an argument OR returns a function."
+      },
+      { "id": "d", "text": "A function containing an inner function." }
+    ],
+    "correct": "c",
+    "feedback": "Because functions are first-class citizens in JS, HOFs operate on other functions (e.g., `map`, `filter`, or custom curried functions)."
+  },
+  {
+    "id": 19,
+    "topic": "IIFE",
+    "text": "Which of the following is the correct syntax for an Immediately Invoked Function Expression (IIFE)?",
+    "options": [
+      { "id": "a", "text": "`function() { console.log('hi'); }();`" },
+      { "id": "b", "text": "`(function() { console.log('hi'); })();`" },
+      { "id": "c", "text": "`function() { console.log('hi'); }()();`" },
+      { "id": "d", "text": "`let func = function() { console.log('hi'); };`" }
+    ],
+    "correct": "b",
+    "feedback": "The surrounding parentheses `(...)` trick the JS parser into treating the function as an expression, and the trailing `()` invokes it."
+  },
+  {
+    "id": 20,
+    "topic": "Hoisting",
+    "text": "Can you call a function expression before it is declared in the code?\n```javascript\nmyFunc();\nvar myFunc = function() { console.log('Hello'); };\n```",
+    "options": [
+      { "id": "a", "text": "Yes, because all functions are hoisted." },
+      {
+        "id": "b",
+        "text": "No, it will throw a `ReferenceError` because `var` is not hoisted."
+      },
+      {
+        "id": "c",
+        "text": "No, it throws a `TypeError` because `myFunc` is hoisted as `undefined`, which is not a function."
+      },
+      { "id": "d", "text": "Yes, it works perfectly." }
+    ],
+    "correct": "c",
+    "feedback": "Function *declarations* are hoisted completely. Function *expressions* attached to `var` only hoist the variable name, not the function body."
+  },
+  {
+    "id": 21,
+    "topic": "Array Methods",
+    "text": "What does the `.map()` method return?",
+    "options": [
+      { "id": "a", "text": "A single accumulated value." },
+      { "id": "b", "text": "The original array, modified." },
+      {
+        "id": "c",
+        "text": "A new array of the exact same length, containing transformed elements."
+      },
+      {
+        "id": "d",
+        "text": "A new array containing only elements that passed a condition."
+      }
+    ],
+    "correct": "c",
+    "feedback": "`map()` always returns a new array of the same length. It does not mutate the original array."
+  },
+  {
+    "id": 22,
+    "topic": "Array Methods",
+    "text": "What will be the output?\n```javascript\nconst arr = [1, 2, 3, 4];\nconst res = arr.filter(n => n > 2).map(n => n * 2);\nconsole.log(res);\n```",
+    "options": [
+      { "id": "a", "text": "`[6, 8]`" },
+      { "id": "b", "text": "`[3, 4]`" },
+      { "id": "c", "text": "`[2, 4, 6, 8]`" },
+      { "id": "d", "text": "`8`" }
+    ],
+    "correct": "a",
+    "feedback": "Chaining! First `filter` keeps `[3, 4]`. Then `map` doubles them to `[6, 8]`."
+  },
+  {
+    "id": 23,
+    "topic": "Array Methods",
+    "text": "In `.reduce()`, what happens if you DO NOT provide an initial value (the second argument)?",
+    "options": [
+      { "id": "a", "text": "It throws an error." },
+      { "id": "b", "text": "The initial value defaults to `0`." },
+      { "id": "c", "text": "The initial value defaults to `undefined`." },
+      {
+        "id": "d",
+        "text": "It uses the first element of the array as the initial accumulator."
+      }
+    ],
+    "correct": "d",
+    "feedback": "If omitted, the accumulator starts as `array[0]` and the loop begins at `array[1]`. If the array is empty and no initial value is provided, it throws a `TypeError`."
+  },
+  {
+    "id": 24,
+    "topic": "Destructuring",
+    "text": "How do you extract ONLY the third element from an array using destructuring?\n```javascript\nconst colors = ['red', 'green', 'blue', 'yellow'];\n```",
+    "options": [
+      { "id": "a", "text": "`const [,, third] = colors;`" },
+      { "id": "b", "text": "`const [2: third] = colors;`" },
+      { "id": "c", "text": "`const { 2: third } = colors;`" },
+      { "id": "d", "text": "`const third = [...colors][2];`" }
+    ],
+    "correct": "a",
+    "feedback": "You can skip elements in array destructuring by simply leaving the space empty between commas `[,, varName]`."
+  },
+  {
+    "id": 25,
+    "topic": "Destructuring",
+    "text": "What is the output of this object destructuring?\n```javascript\nconst user = { name: 'Alice' };\nconst { name, age = 25 } = user;\nconsole.log(age);\n```",
+    "options": [
+      { "id": "a", "text": "`undefined`" },
+      { "id": "b", "text": "`null`" },
+      { "id": "c", "text": "`25`" },
+      { "id": "d", "text": "`ReferenceError`" }
+    ],
+    "correct": "c",
+    "feedback": "You can assign default values during destructuring using `=`. Since `age` is `undefined` in `user`, it falls back to `25`."
+  },
+  {
+    "id": 26,
+    "topic": "Spread Operator",
+    "text": "Is the Spread operator (`...`) used for deep cloning or shallow cloning objects?",
+    "options": [
+      { "id": "a", "text": "Deep cloning" },
+      { "id": "b", "text": "Shallow cloning" },
+      { "id": "c", "text": "It only works on arrays, not objects" },
+      { "id": "d", "text": "It creates a reference, not a clone" }
+    ],
+    "correct": "b",
+    "feedback": "Spread `{...obj}` only creates a shallow copy. Any nested objects or arrays inside will still share the same memory reference as the original."
+  },
+  {
+    "id": 27,
+    "topic": "Rest Operator",
+    "text": "Where MUST the Rest parameter be placed in a function definition?",
+    "options": [
+      { "id": "a", "text": "At the beginning (e.g., `function(...rest, a)`)" },
+      { "id": "b", "text": "It doesn't matter, anywhere." },
+      { "id": "c", "text": "At the very end (e.g., `function(a, b, ...rest)`)" },
+      { "id": "d", "text": "It can only be the sole parameter." }
+    ],
+    "correct": "c",
+    "feedback": "The Rest parameter collects all *remaining* arguments into an array, so it must be the last parameter."
+  },
+  {
+    "id": 28,
+    "topic": "Prototypes",
+    "text": "When you access a property on an object (e.g., `obj.toString()`) and it doesn't exist on the object itself, what does JS do?",
+    "options": [
+      { "id": "a", "text": "Throws a `ReferenceError`." },
+      { "id": "b", "text": "Returns `null`." },
+      {
+        "id": "c",
+        "text": "Looks up the prototype chain to see if the object's prototype possesses it."
+      },
+      { "id": "d", "text": "Automatically creates the property." }
+    ],
+    "correct": "c",
+    "feedback": "This is Prototypal Inheritance. JS traverses up the `__proto__` chain until it finds the property or hits `null`."
+  },
+  {
+    "id": 29,
+    "topic": "Prototypes",
+    "text": "Which method creates a new object and explicitly sets its prototype to an existing object?",
+    "options": [
+      { "id": "a", "text": "`Object.assign()`" },
+      { "id": "b", "text": "`Object.create()`" },
+      { "id": "c", "text": "`Object.setPrototypeOf()`" },
+      { "id": "d", "text": "`new Object()`" }
+    ],
+    "correct": "b",
+    "feedback": "`Object.create(parentObj)` creates a brand new empty object, but links its internal `[[Prototype]]` to `parentObj`."
+  },
+  {
+    "id": 30,
+    "topic": "Arrow Functions",
+    "text": "How do you implicitly return an object literal from an arrow function?",
+    "options": [
+      { "id": "a", "text": "`() => { key: 'val' }`" },
+      { "id": "b", "text": "`() => return { key: 'val' }`" },
+      { "id": "c", "text": "`() => ({ key: 'val' })`" },
+      { "id": "d", "text": "`() => Object({ key: 'val' })`" }
+    ],
+    "correct": "c",
+    "feedback": "Because `{}` denotes a function block, returning an object implicitly requires wrapping it in parentheses `({ ... })` so the parser evaluates it as an expression."
+  },
+  {
+    "id": 31,
+    "topic": "Event Loop",
+    "text": "Which queue has higher priority in the Event Loop: The Macrotask Queue (`setTimeout`) or the Microtask Queue (Promises)?",
+    "options": [
+      { "id": "a", "text": "Macrotask Queue" },
+      { "id": "b", "text": "Microtask Queue" },
+      { "id": "c", "text": "They have equal priority, executed in order of addition." },
+      { "id": "d", "text": "It depends on the browser implementation." }
+    ],
+    "correct": "b",
+    "feedback": "The Event Loop empties the entire Microtask Queue (Promises) immediately after the current sync code finishes, before checking the Macrotask Queue."
+  },
+  {
+    "id": 32,
+    "topic": "Event Loop",
+    "text": "What is the correct output order?\n```javascript\nconsole.log('1');\nsetTimeout(() => console.log('2'), 0);\nPromise.resolve().then(() => console.log('3'));\nconsole.log('4');\n```",
+    "options": [
+      { "id": "a", "text": "`1`, `2`, `3`, `4`" },
+      { "id": "b", "text": "`1`, `4`, `2`, `3`" },
+      { "id": "c", "text": "`1`, `4`, `3`, `2`" },
+      { "id": "d", "text": "`1`, `3`, `4`, `2`" }
+    ],
+    "correct": "c",
+    "feedback": "`1` & `4` run synchronously. Then the Microtask (Promise) runs, printing `3`. Finally, the Macrotask (`setTimeout`) runs, printing `2`."
+  },
+  {
+    "id": 33,
+    "topic": "Callbacks",
+    "text": "What is 'Callback Hell'?",
+    "options": [
+      { "id": "a", "text": "When a callback function runs infinitely." },
+      {
+        "id": "b",
+        "text": "Deeply nested callbacks resulting from sequentially dependent async operations, making code unreadable."
+      },
+      { "id": "c", "text": "When you pass too many arguments to a callback." },
+      { "id": "d", "text": "An error thrown when a callback is not a function." }
+    ],
+    "correct": "b",
+    "feedback": "Also known as the 'Pyramid of Doom'. Promises and `async/await` were specifically created to flatten this structure."
+  },
+  {
+    "id": 34,
+    "topic": "Promises",
+    "text": "What are the three possible states of a Promise?",
+    "options": [
+      { "id": "a", "text": "Waiting, Working, Finished" },
+      { "id": "b", "text": "Pending, Fulfilled, Rejected" },
+      { "id": "c", "text": "Started, Resolved, Errored" },
+      { "id": "d", "text": "Open, Active, Closed" }
+    ],
+    "correct": "b",
+    "feedback": "A Promise starts as Pending. It can then 'settle' by either becoming Fulfilled (success) or Rejected (failure). Once settled, state cannot change."
+  },
+  {
+    "id": 35,
+    "topic": "Async/Await",
+    "text": "What does an `async` function always return, regardless of what you explicitly return inside it?",
+    "options": [
+      { "id": "a", "text": "Undefined" },
+      { "id": "b", "text": "A Callback" },
+      { "id": "c", "text": "A Promise" },
+      { "id": "d", "text": "A Generator" }
+    ],
+    "correct": "c",
+    "feedback": "Prefixing a function with `async` ensures it implicitly wraps the return value in a resolved Promise (or rejected Promise if it throws an error)."
+  },
+  {
+    "id": 36,
+    "topic": "Async/Await",
+    "text": "Where is the ONLY place you can use the `await` keyword?",
+    "options": [
+      { "id": "a", "text": "Inside any function." },
+      {
+        "id": "b",
+        "text": "Inside an `async` function (or top-level in modern JS modules)."
+      },
+      { "id": "c", "text": "Inside a `.then()` block." },
+      { "id": "d", "text": "Inside a `setTimeout` callback." }
+    ],
+    "correct": "b",
+    "feedback": "`await` is inextricably linked to `async`. It pauses the execution of that specific `async` block without blocking the main JS thread."
+  },
+  {
+    "id": 37,
+    "topic": "Promises",
+    "text": "How does `Promise.all()` behave if just ONE of the provided promises rejects?",
+    "options": [
+      { "id": "a", "text": "It resolves with an array including the error." },
+      { "id": "b", "text": "It waits for the others to finish, then rejects." },
+      {
+        "id": "c",
+        "text": "It immediately rejects the entire Promise.all with that single error (fail-fast)."
+      },
+      { "id": "d", "text": "It ignores the error and returns the successful ones." }
+    ],
+    "correct": "c",
+    "feedback": "`Promise.all()` is all-or-nothing. To wait for everything regardless of failure, use `Promise.allSettled()`."
+  },
+  {
+    "id": 38,
+    "topic": "Promises",
+    "text": "What does `Promise.race()` do?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Resolves only if all promises resolve at the exact same time."
+      },
+      {
+        "id": "b",
+        "text": "Settles as soon as the FIRST promise settles (resolves OR rejects)."
+      },
+      {
+        "id": "c",
+        "text": "Resolves as soon as the first promise resolves successfully (ignoring rejects)."
+      },
+      { "id": "d", "text": "Executes promises synchronously." }
+    ],
+    "correct": "b",
+    "feedback": "It's a race. The first one to cross the finish line—whether it's a success or a failure—determines the fate of the `race()`."
+  },
+  {
+    "id": 39,
+    "topic": "Promises",
+    "text": "How does `Promise.any()` differ from `Promise.race()`?",
+    "options": [
+      { "id": "a", "text": "They are the same." },
+      {
+        "id": "b",
+        "text": "`any()` waits for the first SUCCESSFUL resolve, ignoring early rejections."
+      },
+      {
+        "id": "c",
+        "text": "`any()` resolves if at least half of the promises resolve."
+      },
+      { "id": "d", "text": "`any()` returns a boolean." }
+    ],
+    "correct": "b",
+    "feedback": "`Promise.any()` seeks the first success. It only rejects if ALL provided promises reject."
+  },
+  {
+    "id": 40,
+    "topic": "Event Loop",
+    "text": "If you call `setTimeout(fn, 0)`, why doesn't it execute immediately (0ms)?",
+    "options": [
+      { "id": "a", "text": "It actually does execute exactly at 0ms." },
+      {
+        "id": "b",
+        "text": "Because it must wait for the current synchronous Call Stack and all Microtasks to clear first."
+      },
+      { "id": "c", "text": "Because JS has a bug handling the number 0." },
+      { "id": "d", "text": "Because 0 is coerced to false, cancelling the timeout." }
+    ],
+    "correct": "b",
+    "feedback": "0ms means 'execute as soon as the engine is idle', which happens only after the Call Stack is empty."
+  },
+  {
+    "id": 41,
+    "topic": "DOM Events",
+    "text": "What are the three phases of DOM Event propagation?",
+    "options": [
+      { "id": "a", "text": "Target, Capturing, Bubbling" },
+      { "id": "b", "text": "Capturing, Target, Bubbling" },
+      { "id": "c", "text": "Bubbling, Execution, Capturing" },
+      { "id": "d", "text": "Trickling, Running, Bubbling" }
+    ],
+    "correct": "b",
+    "feedback": "1. Capturing (Trickling down from window to target). 2. Target Phase. 3. Bubbling (up from target to window)."
+  },
+  {
+    "id": 42,
+    "topic": "DOM Events",
+    "text": "By default, does `addEventListener` listen to the Capturing phase or the Bubbling phase?",
+    "options": [
+      { "id": "a", "text": "Capturing" },
+      { "id": "b", "text": "Bubbling" },
+      { "id": "c", "text": "Both simultaneously" },
+      { "id": "d", "text": "Target only" }
+    ],
+    "correct": "b",
+    "feedback": "The default is Bubbling. To listen on the Capturing phase, you must pass `{ capture: true }` or `true` as the 3rd argument."
+  },
+  {
+    "id": 43,
+    "topic": "DOM Events",
+    "text": "How do you stop an event from continuing to bubble up the DOM tree?",
+    "options": [
+      { "id": "a", "text": "`event.preventDefault()`" },
+      { "id": "b", "text": "`return false`" },
+      { "id": "c", "text": "`event.stopPropagation()`" },
+      { "id": "d", "text": "`event.cancel()`" }
+    ],
+    "correct": "c",
+    "feedback": "`stopPropagation()` prevents the event from travelling to parent elements. `preventDefault()` stops default browser behaviors (like a link navigating)."
+  },
+  {
+    "id": 44,
+    "topic": "Event Delegation",
+    "text": "What is the primary benefit of Event Delegation?",
+    "options": [
+      { "id": "a", "text": "It encrypts event payloads." },
+      {
+        "id": "b",
+        "text": "It attaches a single listener to a parent, saving memory and handling dynamically added children."
+      },
+      { "id": "c", "text": "It prevents default browser behaviors automatically." },
+      { "id": "d", "text": "It creates a multi-threaded event loop." }
+    ],
+    "correct": "b",
+    "feedback": "Instead of 100 listeners on 100 `<li>` items, you put 1 listener on the `<ul>` and use `event.target` to figure out which `<li>` bubbled up."
+  },
+  {
+    "id": 45,
+    "topic": "DOM Events",
+    "text": "Inside an event listener, what is the difference between `event.target` and `event.currentTarget`?",
+    "options": [
+      { "id": "a", "text": "They are exactly the same." },
+      {
+        "id": "b",
+        "text": "`target` is the element that triggered the event; `currentTarget` is the element the listener is attached to."
+      },
+      {
+        "id": "c",
+        "text": "`currentTarget` is the element that triggered the event; `target` is the element the listener is attached to."
+      },
+      { "id": "d", "text": "`currentTarget` is the Window; `target` is the Document." }
+    ],
+    "correct": "b",
+    "feedback": "In Event Delegation, `currentTarget` is the parent `<ul>` (where the listener lives), while `target` is the specific `<li>` you clicked on."
+  },
+  {
+    "id": 46,
+    "topic": "DOM Events",
+    "text": "Which of these events DOES NOT bubble?",
+    "options": [
+      { "id": "a", "text": "`click`" },
+      { "id": "b", "text": "`keyup`" },
+      { "id": "c", "text": "`focus`" },
+      { "id": "d", "text": "`change`" }
+    ],
+    "correct": "c",
+    "feedback": "Certain events like `focus`, `blur`, `mouseenter`, and `mouseleave` do not bubble. You must use capture or their bubbling equivalents (`focusin`, `mouseover`)."
+  },
+  {
+    "id": 47,
+    "topic": "DOM Elements",
+    "text": "What type of object does `document.querySelectorAll()` return?",
+    "options": [
+      { "id": "a", "text": "A standard JavaScript Array" },
+      { "id": "b", "text": "A static NodeList" },
+      { "id": "c", "text": "A live HTMLCollection" },
+      { "id": "d", "text": "A string of HTML elements" }
+    ],
+    "correct": "b",
+    "feedback": "It returns a NodeList, which is 'Array-like' but lacks methods like `map` or `reduce`. You can convert it using `Array.from()` or spread `[...list]`."
+  },
+  {
+    "id": 48,
+    "topic": "DOM API",
+    "text": "How do you properly add a new CSS class to a DOM element without overwriting existing classes?",
+    "options": [
+      { "id": "a", "text": "`element.className = 'new-class';`" },
+      { "id": "b", "text": "`element.style.class = 'new-class';`" },
+      { "id": "c", "text": "`element.classList.add('new-class');`" },
+      { "id": "d", "text": "`element.setAttribute('class', 'new-class');`" }
+    ],
+    "correct": "c",
+    "feedback": "`classList` provides clean methods like `add()`, `remove()`, and `toggle()` without destroying the existing class string."
+  },
+  {
+    "id": 49,
+    "topic": "DOM API",
+    "text": "What is the correct way to create a new `<div>` element in JavaScript?",
+    "options": [
+      { "id": "a", "text": "`document.makeElement('div')`" },
+      { "id": "b", "text": "`document.createElement('div')`" },
+      { "id": "c", "text": "`window.html('<div>')`" },
+      { "id": "d", "text": "`new DOMElement('div')`" }
+    ],
+    "correct": "b",
+    "feedback": "`document.createElement('div')` creates the node in memory. You must then use `appendChild()` or `append()` to attach it to the visible DOM."
+  },
+  {
+    "id": 50,
+    "topic": "Browser Environment",
+    "text": "What is the difference between `localStorage` and `sessionStorage`?",
+    "options": [
+      { "id": "a", "text": "`localStorage` holds 5MB, `sessionStorage` holds 10MB." },
+      {
+        "id": "b",
+        "text": "`localStorage` persists after closing the browser; `sessionStorage` is cleared when the tab/window closes."
+      },
+      {
+        "id": "c",
+        "text": "`localStorage` is sent to the server on every request, `sessionStorage` is not."
+      },
+      {
+        "id": "d",
+        "text": "`localStorage` can store objects directly; `sessionStorage` only stores strings."
+      }
+    ],
+    "correct": "b",
+    "feedback": "Both only store strings and hold about 5MB, but `sessionStorage` lifespan is tied strictly to the current browser tab session."
+  }
+]

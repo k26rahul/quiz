@@ -1,0 +1,705 @@
+[
+  {
+    "id": 1,
+    "topic": "Type Coercion",
+    "text": "What is the output of `[] == ![]`?",
+    "options": [
+      { "id": "a", "text": "`true`" },
+      { "id": "b", "text": "`false`" },
+      { "id": "c", "text": "`TypeError`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "a",
+    "feedback": "`![]` evaluates to `false`. The comparison becomes `[] == false`. `[]` coerces to `\"\"` (empty string), which coerces to `0`. `false` coerces to `0`. `0 == 0` is `true`."
+  },
+  {
+    "id": 2,
+    "topic": "Type Coercion",
+    "text": "What does `3 > 2 > 1` evaluate to?",
+    "options": [
+      { "id": "a", "text": "`true`" },
+      { "id": "b", "text": "`false`" },
+      { "id": "c", "text": "`SyntaxError`" },
+      { "id": "d", "text": "`TypeError`" }
+    ],
+    "correct": "b",
+    "feedback": "Operators evaluate left-to-right. `3 > 2` evaluates to `true`. Then, `true > 1` evaluates to `1 > 1`, which is `false`."
+  },
+  {
+    "id": 3,
+    "topic": "Types",
+    "text": "What is the output of `console.log(typeof typeof 1);`?",
+    "options": [
+      { "id": "a", "text": "`\"number\"`" },
+      { "id": "b", "text": "`\"string\"`" },
+      { "id": "c", "text": "`\"object\"`" },
+      { "id": "d", "text": "`\"undefined\"`" }
+    ],
+    "correct": "b",
+    "feedback": "`typeof 1` evaluates to the string `\"number\"`. Then, `typeof \"number\"` evaluates to `\"string\"`."
+  },
+  {
+    "id": 4,
+    "topic": "Arrays",
+    "text": "What is the output of the following code?\n```javascript\nconst arr = [1, 2, 15];\narr.sort();\nconsole.log(arr);\n```",
+    "options": [
+      { "id": "a", "text": "`[1, 2, 15]`" },
+      { "id": "b", "text": "`[15, 2, 1]`" },
+      { "id": "c", "text": "`[1, 15, 2]`" },
+      { "id": "d", "text": "`[2, 1, 15]`" }
+    ],
+    "correct": "c",
+    "feedback": "By default, `.sort()` converts elements to strings and compares their UTF-16 code units. `\"15\"` comes before `\"2\"`."
+  },
+  {
+    "id": 5,
+    "topic": "Hoisting & Scope",
+    "text": "What is the output?\n```javascript\nvar a = 1;\nfunction b() {\n  a = 10;\n  return;\n  function a() {}\n}\nb();\nconsole.log(a);\n```",
+    "options": [
+      { "id": "a", "text": "`1`" },
+      { "id": "b", "text": "`10`" },
+      { "id": "c", "text": "`function a() {}`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "a",
+    "feedback": "Inside `b`, `function a() {}` is hoisted to the top of `b`'s scope. The assignment `a = 10` overwrites the local `a`, leaving the global `a` completely untouched."
+  },
+  {
+    "id": 6,
+    "topic": "Closures",
+    "text": "What is the output of this loop?\n```javascript\nfor (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n```",
+    "options": [
+      { "id": "a", "text": "`0, 1, 2`" },
+      { "id": "b", "text": "`3, 3, 3`" },
+      { "id": "c", "text": "`1, 2, 3`" },
+      { "id": "d", "text": "`undefined, undefined, undefined`" }
+    ],
+    "correct": "b",
+    "feedback": "`var` is function/globally scoped. By the time the asynchronous `setTimeout` callbacks run, the loop has completed and the single shared `i` variable is `3`."
+  },
+  {
+    "id": 7,
+    "topic": "TDZ",
+    "text": "What happens when this code executes?\n```javascript\nlet x = 10;\n(function() {\n  console.log(x);\n  let x = 20;\n})();\n```",
+    "options": [
+      { "id": "a", "text": "Logs `10`" },
+      { "id": "b", "text": "Logs `undefined`" },
+      { "id": "c", "text": "Logs `20`" },
+      { "id": "d", "text": "Throws `ReferenceError`" }
+    ],
+    "correct": "d",
+    "feedback": "The inner `let x = 20` is hoisted to the top of the IIFE block, shadowing the outer `x`. However, accessing it before initialization results in a Temporal Dead Zone `ReferenceError`."
+  },
+  {
+    "id": 8,
+    "topic": "Context",
+    "text": "What is the output?\n```javascript\nconst obj = {\n  name: 'Alice',\n  greet: function() {\n    return () => console.log(this.name);\n  }\n};\nconst fn = obj.greet();\nfn();\n```",
+    "options": [
+      { "id": "a", "text": "`undefined`" },
+      { "id": "b", "text": "`Alice`" },
+      { "id": "c", "text": "Throws `TypeError`" },
+      { "id": "d", "text": "Logs the `window` object" }
+    ],
+    "correct": "b",
+    "feedback": "The arrow function captures `this` lexically from `greet`'s execution context. Since `greet` was called on `obj`, `this` remains `obj` inside the arrow function, even when executed later."
+  },
+  {
+    "id": 9,
+    "topic": "Context",
+    "text": "What does this code log?\n```javascript\nconst user = {\n  name: 'Bob',\n  printName() { console.log(this.name); }\n};\nsetTimeout(user.printName, 100);\n```",
+    "options": [
+      { "id": "a", "text": "`Bob`" },
+      { "id": "b", "text": "`undefined` (or empty string)" },
+      { "id": "c", "text": "Throws `TypeError`" },
+      { "id": "d", "text": "Logs the `user` object" }
+    ],
+    "correct": "b",
+    "feedback": "Passing `user.printName` as a reference strips its object context. When `setTimeout` calls it later, `this` defaults to `window` (or `undefined` in strict mode)."
+  },
+  {
+    "id": 10,
+    "topic": "Context / bind",
+    "text": "What is the output of chained `.bind()` calls?\n```javascript\nfunction f() { return this.a; }\nconst bound = f.bind({a: 1}).bind({a: 2});\nconsole.log(bound());\n```",
+    "options": [
+      { "id": "a", "text": "`1`" },
+      { "id": "b", "text": "`2`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "Throws `TypeError`" }
+    ],
+    "correct": "a",
+    "feedback": "Once a function is bound using `.bind()`, its `this` context is permanently locked. Subsequent `.bind()` calls cannot override the first binding."
+  },
+  {
+    "id": 11,
+    "topic": "Object Keys",
+    "text": "What is logged?\n```javascript\nconst x = { foo: 1 }, y = { foo: 2 }, obj = {};\nobj[x] = 'X';\nobj[y] = 'Y';\nconsole.log(obj[x]);\n```",
+    "options": [
+      { "id": "a", "text": "`X`" },
+      { "id": "b", "text": "`Y`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "`{ foo: 1 }`" }
+    ],
+    "correct": "b",
+    "feedback": "Object keys are coerced to strings. Both `x` and `y` become the string `\"[object Object]\"`. The second assignment simply overwrites the first."
+  },
+  {
+    "id": 12,
+    "topic": "Prototypes",
+    "text": "Which statement is true about `Object.create(null)`?",
+    "options": [
+      {
+        "id": "a",
+        "text": "It creates an object that inherits from `Object.prototype`."
+      },
+      { "id": "b", "text": "It throws a `TypeError`." },
+      {
+        "id": "c",
+        "text": "It creates a completely empty dictionary object with no prototype chain."
+      },
+      { "id": "d", "text": "It creates a deep clone of `null`." }
+    ],
+    "correct": "c",
+    "feedback": "It creates an object without a `__proto__`. It won't have methods like `toString()` or `hasOwnProperty()`, making it a perfect 'pure' dictionary."
+  },
+  {
+    "id": 13,
+    "topic": "Operators",
+    "text": "What does the `delete` operator actually do in this scenario?\n```javascript\nconst arr = [1, 2, 3];\ndelete arr[1];\nconsole.log(arr.length);\n```",
+    "options": [
+      { "id": "a", "text": "`2`" },
+      { "id": "b", "text": "`3`" },
+      { "id": "c", "text": "Throws `TypeError`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "b",
+    "feedback": "`delete` removes the property from the object/array, leaving an `empty` slot (yielding `undefined` if accessed), but it DOES NOT reindex the array or alter its `.length`."
+  },
+  {
+    "id": 14,
+    "topic": "Objects",
+    "text": "What is the difference between `Object.freeze()` and `Object.seal()`?",
+    "options": [
+      { "id": "a", "text": "They are identical." },
+      {
+        "id": "b",
+        "text": "`freeze` prevents all changes. `seal` allows modifying existing properties but prevents adding/deleting."
+      },
+      {
+        "id": "c",
+        "text": "`seal` prevents all changes. `freeze` allows modifying existing properties."
+      },
+      { "id": "d", "text": "`freeze` is deep, `seal` is shallow." }
+    ],
+    "correct": "b",
+    "feedback": "`Object.seal()` seals the object structure (no new/deleted keys) but leaves existing values writable. `Object.freeze()` makes existing values read-only as well. Both are shallow."
+  },
+  {
+    "id": 15,
+    "topic": "Classes / new",
+    "text": "What happens when a constructor function explicitly returns an object?\n```javascript\nfunction Person() { \n  this.age = 20; \n  return { age: 30 }; \n}\nconst p = new Person();\nconsole.log(p.age);\n```",
+    "options": [
+      { "id": "a", "text": "`20`" },
+      { "id": "b", "text": "`30`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "Throws `TypeError`" }
+    ],
+    "correct": "b",
+    "feedback": "If a constructor explicitly returns a non-primitive *object*, the `new` operator will return that object instead of the newly constructed `this` instance."
+  },
+  {
+    "id": 16,
+    "topic": "Event Loop",
+    "text": "Determine the exact output order:\n```javascript\nsetTimeout(() => console.log('A'), 0);\nPromise.resolve().then(() => console.log('B'));\nconsole.log('C');\n```",
+    "options": [
+      { "id": "a", "text": "`A`, `B`, `C`" },
+      { "id": "b", "text": "`C`, `A`, `B`" },
+      { "id": "c", "text": "`C`, `B`, `A`" },
+      { "id": "d", "text": "`B`, `C`, `A`" }
+    ],
+    "correct": "c",
+    "feedback": "Synchronous `C` runs first. The Microtask `B` (Promise) runs immediately after the sync stack clears. The Macrotask `A` (setTimeout) runs last."
+  },
+  {
+    "id": 17,
+    "topic": "Promises",
+    "text": "What is logged?\n```javascript\nPromise.resolve(1)\n  .then(() => { throw new Error('ops'); })\n  .catch(e => 2)\n  .then(res => console.log(res));\n```",
+    "options": [
+      { "id": "a", "text": "`1`" },
+      { "id": "b", "text": "`2`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "Uncaught Error" }
+    ],
+    "correct": "b",
+    "feedback": "The `.catch()` block handles the error and returns `2`. Returning a standard value from a catch block resolves the *next* chained Promise with that value."
+  },
+  {
+    "id": 18,
+    "topic": "Async/Await",
+    "text": "What happens if you `await` a non-Promise value?\n```javascript\nasync function foo() {\n  const res = await 5;\n  console.log(res);\n}\nfoo();\n```",
+    "options": [
+      { "id": "a", "text": "Throws a `TypeError`" },
+      { "id": "b", "text": "Hangs indefinitely" },
+      { "id": "c", "text": "Logs `undefined`" },
+      { "id": "d", "text": "Logs `5`" }
+    ],
+    "correct": "d",
+    "feedback": "If the value is not a Promise, `await` automatically wraps it in a resolved Promise (`Promise.resolve(5)`) and continues execution in the next microtask."
+  },
+  {
+    "id": 19,
+    "topic": "Async Iteration",
+    "text": "What is the output?\n```javascript\nconst arr = [1, 2, 3];\narr.forEach(async (num) => {\n  await new Promise(r => setTimeout(r, 10)); \n  console.log(num);\n});\nconsole.log('Done');\n```",
+    "options": [
+      { "id": "a", "text": "`1`, `2`, `3`, `Done`" },
+      { "id": "b", "text": "`Done`, `1`, `2`, `3`" },
+      { "id": "c", "text": "`Done` (and the numbers are never logged)" },
+      { "id": "d", "text": "Throws `SyntaxError`" }
+    ],
+    "correct": "b",
+    "feedback": "Array `.forEach` is strictly synchronous and does not `await` its callbacks. It fires off all three async functions and immediately moves to log `'Done'`."
+  },
+  {
+    "id": 20,
+    "topic": "Promises",
+    "text": "What happens if a Promise rejects and there is NO `.catch()` block attached?",
+    "options": [
+      { "id": "a", "text": "The rejection is silently swallowed." },
+      { "id": "b", "text": "It retries the Promise automatically." },
+      { "id": "c", "text": "It throws an 'Unhandled Promise Rejection' error." },
+      {
+        "id": "d",
+        "text": "It falls back to the global `window.onerror` handler."
+      }
+    ],
+    "correct": "c",
+    "feedback": "Unhandled rejections trigger an UnhandledPromiseRejection warning/error. In modern Node.js, this will crash the process by default."
+  },
+  {
+    "id": 21,
+    "topic": "Destructuring",
+    "text": "What is the output?\n```javascript\nconst obj = { a: { b: 1 } };\nconst { a: { b } } = obj;\nconsole.log(a);\n```",
+    "options": [
+      { "id": "a", "text": "`{ b: 1 }`" },
+      { "id": "b", "text": "`1`" },
+      { "id": "c", "text": "Throws `ReferenceError`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "c",
+    "feedback": "In nested destructuring, `a:` acts strictly as a *path* to access `b`. It does not create a variable named `a`. Only `b` is declared."
+  },
+  {
+    "id": 22,
+    "topic": "Functions",
+    "text": "What does this output?\n```javascript\nfunction outer() {\n  const inner = () => console.log(arguments[0]);\n  inner(2);\n}\nouter(1);\n```",
+    "options": [
+      { "id": "a", "text": "`1`" },
+      { "id": "b", "text": "`2`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "Throws `ReferenceError`" }
+    ],
+    "correct": "a",
+    "feedback": "Arrow functions do NOT have their own `arguments` object. They lexically inherit `arguments` from the closest regular enclosing function (`outer`), where it is `1`."
+  },
+  {
+    "id": 24,
+    "topic": "Operators",
+    "text": "What is the difference between Nullish Coalescing `??` and Logical OR `||`?",
+    "options": [
+      { "id": "a", "text": "They are identical." },
+      {
+        "id": "b",
+        "text": "`??` falls back on all falsy values. `||` falls back only on null/undefined."
+      },
+      {
+        "id": "c",
+        "text": "`??` falls back only on `null` or `undefined`. `||` falls back on ALL falsy values (like `0` or `\"\"`)."
+      },
+      { "id": "d", "text": "`??` is for numbers, `||` is for booleans." }
+    ],
+    "correct": "c",
+    "feedback": "Using `0 || 5` results in `5`. Using `0 ?? 5` results in `0`, which is crucial when `0` is a valid, intended value."
+  },
+  {
+    "id": 25,
+    "topic": "Generators",
+    "text": "What is logged?\n```javascript\nfunction* gen() { \n  yield 1; \n  yield 2; \n}\nconst g = gen();\nconsole.log(g.next().value);\n```",
+    "options": [
+      { "id": "a", "text": "`1`" },
+      { "id": "b", "text": "`2`" },
+      { "id": "c", "text": "`{value: 1, done: false}`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "a",
+    "feedback": "`g.next()` executes the generator up to the first `yield` and returns an object: `{value: 1, done: false}`. Accessing `.value` gives `1`."
+  },
+  {
+    "id": 26,
+    "topic": "Tagged Templates",
+    "text": "What does `strings[0]` equal in this tagged template?\n```javascript\nfunction tag(strings, ...values) {\n  console.log(strings[0]);\n}\ntag`Hello ${'World'}!`;\n```",
+    "options": [
+      { "id": "a", "text": "`\"Hello World!\"`" },
+      { "id": "b", "text": "`\"World\"`" },
+      { "id": "c", "text": "`\"Hello \"`" },
+      { "id": "d", "text": "`[\"Hello \", \"!\"]`" }
+    ],
+    "correct": "c",
+    "feedback": "The first argument to a tag function is an array of the literal string segments. The string before the first expression is `\"Hello \"`."
+  },
+  {
+    "id": 27,
+    "topic": "Map / ParseInt",
+    "text": "A classic gotcha: What does `['1', '7', '11'].map(parseInt)` return?",
+    "options": [
+      { "id": "a", "text": "`[1, 7, 11]`" },
+      { "id": "b", "text": "`[1, NaN, 3]`" },
+      { "id": "c", "text": "`[1, NaN, 11]`" },
+      { "id": "d", "text": "Throws `TypeError`" }
+    ],
+    "correct": "b",
+    "feedback": "`.map` passes `(value, index)`. `parseInt` takes `(string, radix)`. It executes `parseInt('1', 0)`, `parseInt('7', 1)` -> NaN, `parseInt('11', 2)` -> binary 3."
+  },
+  {
+    "id": 28,
+    "topic": "Global Object",
+    "text": "Which keyword provides a standardized way to access the global object across all environments (Browser, Node.js, Web Workers)?",
+    "options": [
+      { "id": "a", "text": "`window`" },
+      { "id": "b", "text": "`global`" },
+      { "id": "c", "text": "`globalThis`" },
+      { "id": "d", "text": "`self`" }
+    ],
+    "correct": "c",
+    "feedback": "ES2020 introduced `globalThis` to resolve the fragmentation (`window` in browsers, `global` in Node, `self` in Workers)."
+  },
+  {
+    "id": 29,
+    "topic": "Math Precision",
+    "text": "Why does `0.1 + 0.2 === 0.3` evaluate to `false`?",
+    "options": [
+      { "id": "a", "text": "JavaScript incorrectly coerces the types." },
+      {
+        "id": "b",
+        "text": "Due to base-2 binary floating-point precision (IEEE 754), it evaluates to `0.30000000000000004`."
+      },
+      { "id": "c", "text": "Because `0.3` is an integer and `0.1` is a float." },
+      { "id": "d", "text": "It evaluates to `true`." }
+    ],
+    "correct": "b",
+    "feedback": "Not unique to JS! Any language using IEEE 754 double-precision floats cannot perfectly represent certain decimal fractions."
+  },
+  {
+    "id": 30,
+    "topic": "Symbols",
+    "text": "What is the difference between `Symbol('a')` and `Symbol.for('a')`?",
+    "options": [
+      { "id": "a", "text": "No difference." },
+      {
+        "id": "b",
+        "text": "`Symbol()` creates a local symbol, `Symbol.for()` checks the global symbol registry and reuses it if found."
+      },
+      {
+        "id": "c",
+        "text": "`Symbol.for()` returns a string, `Symbol()` returns a Symbol."
+      },
+      { "id": "d", "text": "`Symbol.for` is an ES5 polyfill." }
+    ],
+    "correct": "b",
+    "feedback": "`Symbol('a') === Symbol('a')` is false. However, `Symbol.for('a') === Symbol.for('a')` is true because it utilizes the global registry."
+  },
+  {
+    "id": 31,
+    "topic": "Type Coercion",
+    "text": "What do the unary operators yield here: `+true` and `!\"Hello\"`?",
+    "options": [
+      { "id": "a", "text": "`true`, `false`" },
+      { "id": "b", "text": "`1`, `false`" },
+      { "id": "c", "text": "`1`, `true`" },
+      { "id": "d", "text": "`NaN`, `false`" }
+    ],
+    "correct": "b",
+    "feedback": "The `+` unary operator coerces to Number (`+true` is `1`). The `!` operator coerces to Boolean and inverts it (`!\"Hello\"` is `false` because non-empty strings are truthy)."
+  },
+  {
+    "id": 32,
+    "topic": "Memory",
+    "text": "What is the key limitation of the keys in a `WeakMap`?",
+    "options": [
+      { "id": "a", "text": "Keys must be strings." },
+      { "id": "b", "text": "Keys must be primitives." },
+      {
+        "id": "c",
+        "text": "Keys must be Objects or Symbols, preventing garbage collection blockers."
+      },
+      { "id": "d", "text": "WeakMaps cannot have keys, only values." }
+    ],
+    "correct": "c",
+    "feedback": "Primitive values cannot be keys in a WeakMap. Keys must be garbage-collectable references (Objects or non-registered Symbols in ES2023)."
+  },
+  {
+    "id": 33,
+    "topic": "Functions",
+    "text": "What is the output?\n```javascript\nconsole.log((function(a, b, c = 1, d) {}).length);\n```",
+    "options": [
+      { "id": "a", "text": "`4`" },
+      { "id": "b", "text": "`3`" },
+      { "id": "c", "text": "`2`" },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "c",
+    "feedback": "A function's `.length` property indicates the number of parameters expected *before* the first parameter with a default value. `a` and `b` make it `2`."
+  },
+  {
+    "id": 34,
+    "topic": "Equality",
+    "text": "What does `Object.is(-0, 0)` evaluate to?",
+    "options": [
+      { "id": "a", "text": "`true`" },
+      { "id": "b", "text": "`false`" },
+      { "id": "c", "text": "`TypeError`" },
+      { "id": "d", "text": "`NaN`" }
+    ],
+    "correct": "b",
+    "feedback": "While `-0 === 0` is `true`, `Object.is()` is slightly stricter. It accurately distinguishes `-0` from `0` (and correctly asserts `NaN` is `NaN`)."
+  },
+  {
+    "id": 35,
+    "topic": "Iteration",
+    "text": "What is the difference between `Object.keys()` and the `for...in` loop?",
+    "options": [
+      { "id": "a", "text": "They are exactly the same." },
+      {
+        "id": "b",
+        "text": "`Object.keys()` returns an array, `for...in` returns a string."
+      },
+      {
+        "id": "c",
+        "text": "`for...in` iterates over inherited enumerable properties up the prototype chain. `Object.keys()` only returns *own* enumerable properties."
+      },
+      { "id": "d", "text": "`Object.keys()` includes non-enumerable properties." }
+    ],
+    "correct": "c",
+    "feedback": "This is a critical distinction. `for...in` will traverse the prototype chain unless guarded with `.hasOwnProperty()`. `Object.keys()` inherently ignores prototypes."
+  },
+  {
+    "id": 36,
+    "topic": "Type Checking",
+    "text": "How does the global `isNaN()` differ from `Number.isNaN()`?",
+    "options": [
+      { "id": "a", "text": "There is no difference." },
+      {
+        "id": "b",
+        "text": "Global `isNaN()` coerces the argument to a Number first. `Number.isNaN()` strictly checks if the value is precisely `NaN`."
+      },
+      { "id": "c", "text": "Global `isNaN()` is deprecated." },
+      { "id": "d", "text": "`Number.isNaN()` coerces strings to numbers." }
+    ],
+    "correct": "b",
+    "feedback": "`isNaN(\"hello\")` is `true` (coerced to NaN). `Number.isNaN(\"hello\")` is `false` (it's a string, not the NaN type)."
+  },
+  {
+    "id": 37,
+    "topic": "Scope",
+    "text": "What is the output?\n```javascript\ntry {\n  throw new Error();\n} catch (e) {\n  var x = 1;\n  let y = 2;\n}\nconsole.log(x);\n```",
+    "options": [
+      { "id": "a", "text": "Throws `ReferenceError`" },
+      { "id": "b", "text": "`1`" },
+      { "id": "c", "text": "`undefined`" },
+      { "id": "d", "text": "`2`" }
+    ],
+    "correct": "b",
+    "feedback": "`var` ignores block scope, meaning `x` leaks out of the `catch` block. `y` (using let) and `e` are block-scoped and destroyed."
+  },
+  {
+    "id": 38,
+    "topic": "Const",
+    "text": "Is this valid code?\n```javascript\nconst arr = [{a: 1}];\narr[0].a = 2;\n```",
+    "options": [
+      {
+        "id": "a",
+        "text": "Yes, because `const` only protects the reference to the array, not its contents."
+      },
+      { "id": "b", "text": "No, throws `TypeError`." },
+      { "id": "c", "text": "No, throws `SyntaxError`." },
+      { "id": "d", "text": "Yes, but it creates a new array." }
+    ],
+    "correct": "a",
+    "feedback": "Deep mutation is perfectly fine with `const`. The variable `arr` still points to the exact same memory address."
+  },
+  {
+    "id": 39,
+    "topic": "Classes",
+    "text": "In a JavaScript `class`, what does `this` refer to inside a `static` method?",
+    "options": [
+      { "id": "a", "text": "The class instance." },
+      { "id": "b", "text": "The class itself." },
+      { "id": "c", "text": "The global object." },
+      { "id": "d", "text": "`undefined`" }
+    ],
+    "correct": "b",
+    "feedback": "Static methods are called on the class construct itself (e.g., `Math.random()`), not on instantiated objects. Thus, `this` is the class."
+  },
+  {
+    "id": 40,
+    "topic": "Arrays",
+    "text": "What is the output?\n```javascript\nconst arr = [1, , 3];\nconsole.log(arr.map(x => x * 2));\n```",
+    "options": [
+      { "id": "a", "text": "`[2, NaN, 6]`" },
+      { "id": "b", "text": "`[2, 0, 6]`" },
+      { "id": "c", "text": "`[2, empty, 6]`" },
+      { "id": "d", "text": "Throws `TypeError`" }
+    ],
+    "correct": "c",
+    "feedback": "Array methods like `map`, `forEach`, and `filter` automatically skip 'empty slots' in sparse arrays. The slot remains empty."
+  },
+  {
+    "id": 41,
+    "topic": "Type Coercion",
+    "text": "What is `typeof undeclaredVariable`?",
+    "options": [
+      { "id": "a", "text": "Throws `ReferenceError`" },
+      { "id": "b", "text": "`\"null\"`" },
+      { "id": "c", "text": "`\"undefined\"`" },
+      { "id": "d", "text": "`\"string\"`" }
+    ],
+    "correct": "c",
+    "feedback": "`typeof` is a special operator. It is the only safe way to reference a completely undeclared variable without the engine throwing a ReferenceError."
+  },
+  {
+    "id": 42,
+    "topic": "Types",
+    "text": "What is the output of `Object.prototype.toString.call(null)`?",
+    "options": [
+      { "id": "a", "text": "`\"[object Object]\"`" },
+      { "id": "b", "text": "`\"[object Null]\"`" },
+      { "id": "c", "text": "`\"null\"`" },
+      { "id": "d", "text": "Throws `TypeError`" }
+    ],
+    "correct": "b",
+    "feedback": "While `typeof null` incorrectly returns `'object'`, calling the base `toString` method directly reveals its true internal class: `[object Null]`."
+  },
+  {
+    "id": 43,
+    "topic": "Async",
+    "text": "In an `async` function, is `return await promise` different from `return promise`?",
+    "options": [
+      { "id": "a", "text": "No, they compile to the exact same bytecode." },
+      {
+        "id": "b",
+        "text": "Yes. `return await` ensures the function waits for resolution and catches errors locally before returning. `return promise` passes the promise out immediately."
+      },
+      { "id": "c", "text": "`return promise` causes a syntax error." },
+      {
+        "id": "d",
+        "text": "`return await` returns a primitive, `return promise` returns a Promise."
+      }
+    ],
+    "correct": "b",
+    "feedback": "If you just `return promise`, a local `try/catch` block surrounding the return will NOT catch errors, because the rejection happens outside the function."
+  },
+  {
+    "id": 44,
+    "topic": "Modules",
+    "text": "Are ES6 `import` statements hoisted?",
+    "options": [
+      { "id": "a", "text": "No, they run synchronously line-by-line." },
+      {
+        "id": "b",
+        "text": "Yes, they are statically analyzed and hoisted to the top of the module."
+      },
+      { "id": "c", "text": "Only if placed inside a function." },
+      {
+        "id": "d",
+        "text": "No, they throw an error if used before declaration."
+      }
+    ],
+    "correct": "b",
+    "feedback": "JS modules undergo a static analysis phase. `import` statements are hoisted, meaning you can technically import at the bottom of a file."
+  },
+  {
+    "id": 45,
+    "topic": "Variables",
+    "text": "If you execute `let myVar = 10;` in the global scope of a browser console, what is `window.myVar`?",
+    "options": [
+      { "id": "a", "text": "`10`" },
+      { "id": "b", "text": "`undefined`" },
+      { "id": "c", "text": "Throws `ReferenceError`" },
+      { "id": "d", "text": "`null`" }
+    ],
+    "correct": "b",
+    "feedback": "Unlike `var` declarations, `let` and `const` declared in the global scope DO NOT attach themselves as properties to the global `window` object."
+  },
+  {
+    "id": 46,
+    "topic": "Tricky syntax",
+    "text": "Is `setTimeout(\"console.log(1)\", 1000)` valid JavaScript?",
+    "options": [
+      { "id": "a", "text": "No, the first argument must be a function." },
+      { "id": "b", "text": "Yes, but it executes immediately." },
+      {
+        "id": "c",
+        "text": "Yes. `setTimeout` can accept a string which it evaluates like `eval()`. (Though highly discouraged)."
+      },
+      { "id": "d", "text": "Throws `SyntaxError`" }
+    ],
+    "correct": "c",
+    "feedback": "It works, but passing strings to setTimeout is considered a severe security and performance anti-pattern (similar to `eval`)."
+  },
+  {
+    "id": 47,
+    "topic": "Promises",
+    "text": "How does `Promise.all([a(), b()])` handle execution time compared to `await a(); await b();`?",
+    "options": [
+      { "id": "a", "text": "They take the exact same amount of time." },
+      {
+        "id": "b",
+        "text": "`Promise.all` runs them concurrently, taking the time of the longest promise. Sequential `await` runs one after another, summing their times."
+      },
+      {
+        "id": "c",
+        "text": "Sequential `await` is faster because it saves memory."
+      },
+      { "id": "d", "text": "`Promise.all` runs them synchronously." }
+    ],
+    "correct": "b",
+    "feedback": "If `a()` takes 2s and `b()` takes 3s: `Promise.all` finishes in ~3s. Sequential `await` finishes in ~5s."
+  },
+  {
+    "id": 48,
+    "topic": "Optional Chaining",
+    "text": "What happens when you run `obj.method?.()` and `method` does not exist?",
+    "options": [
+      { "id": "a", "text": "Throws `TypeError: obj.method is not a function`" },
+      { "id": "b", "text": "Evaluates to `undefined` without throwing an error." },
+      { "id": "c", "text": "Throws `SyntaxError`" },
+      { "id": "d", "text": "Evaluates to `null`" }
+    ],
+    "correct": "b",
+    "feedback": "Optional chaining works for function calls too! It short-circuits and returns `undefined` if the property before `?.()` is null/undefined."
+  },
+  {
+    "id": 49,
+    "topic": "Functions",
+    "text": "What is `typeof function() {}`?",
+    "options": [
+      { "id": "a", "text": "`\"object\"`" },
+      { "id": "b", "text": "`\"function\"`" },
+      { "id": "c", "text": "`\"undefined\"`" },
+      { "id": "d", "text": "`\"string\"`" }
+    ],
+    "correct": "b",
+    "feedback": "While functions are technically objects in JavaScript, the `typeof` operator has a special carve-out that specifically returns `\"function\"`."
+  },
+  {
+    "id": 50,
+    "topic": "Iterators",
+    "text": "Which of the following is NOT an Iterable by default in JavaScript?",
+    "options": [
+      { "id": "a", "text": "Array" },
+      { "id": "b", "text": "String" },
+      { "id": "c", "text": "Object (`{}`)" },
+      { "id": "d", "text": "Map" }
+    ],
+    "correct": "c",
+    "feedback": "Plain objects do not have a default `Symbol.iterator`. You cannot use `for...of` directly on them without `Object.keys()` or similar."
+  }
+]
