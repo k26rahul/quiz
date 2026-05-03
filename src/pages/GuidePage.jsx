@@ -16,7 +16,7 @@ const GuidePage = () => {
       setMeta(item);
       document.title = `${item.category} Guide: ${item.title}`;
       
-      fetch(`/data/${item.dataFile}`)
+      fetch(`${import.meta.env.BASE_URL}data/${item.dataFile}`)
         .then(res => res.json())
         .then(data => {
           setGuideData(data);

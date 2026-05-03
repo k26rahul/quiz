@@ -5,8 +5,8 @@ const Layout = ({ title, subtitle, children, rightContent, prefix = "Study", sho
   return (
     <div className="min-h-screen pb-20 custom-scrollbar">
       <header className="bg-white border-b border-stone-200 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             {showHomeButton && (
               <Link 
                 to="/" 
@@ -18,22 +18,30 @@ const Layout = ({ title, subtitle, children, rightContent, prefix = "Study", sho
                 </svg>
               </Link>
             )}
-            <div>
+            <div className="min-w-0">
               <h1 className="text-xl font-extrabold text-stone-900 tracking-tight">
                 {prefix} <span className="text-orange-600">{title}</span>
               </h1>
-              <p className="text-xs text-stone-500 font-medium uppercase tracking-widest">
-                {subtitle}
-              </p>
             </div>
-          </div>
-          <div className="flex items-center gap-4">
-            {rightContent}
           </div>
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-6 mt-12">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 mt-6 sm:mt-12">
+        {(subtitle || rightContent) && (
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-8">
+            {subtitle && (
+              <p className="text-base text-stone-500 font-medium leading-relaxed max-w-xl">
+                {subtitle}
+              </p>
+            )}
+            {rightContent && (
+              <div className="flex-shrink-0 self-start">
+                {rightContent}
+              </div>
+            )}
+          </div>
+        )}
         {children}
       </main>
     </div>

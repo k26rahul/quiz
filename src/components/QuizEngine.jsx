@@ -50,9 +50,9 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6 sm:space-y-10">
       {isSubmitted && (
-        <div className="p-8 bg-white rounded-3xl shadow-xl border-2 border-teal-500 text-center revealed">
+        <div className="p-5 sm:p-8 bg-white rounded-3xl shadow-xl border-2 border-teal-500 text-center revealed">
           <h2 className="text-2xl font-black text-stone-900 mb-2">Assessment Complete</h2>
           <div className={`text-6xl font-black mb-4 ${getScoreColor()}`}>
             {score} / {questions.length}
@@ -69,7 +69,7 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
         </div>
       )}
 
-      <div id="quiz-container" className="space-y-10">
+      <div id="quiz-container" className="space-y-6 sm:space-y-10">
         {questions.map((q, index) => {
           const isRevealed = isSubmitted || (isLearningMode && answeredQuestions[q.id]);
           const isSelected = userAnswers[q.id];
@@ -77,19 +77,19 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
           return (
             <div 
               key={q.id}
-              className={`bg-white p-8 rounded-3xl shadow-sm border ${isRevealed ? 'border-stone-300' : 'border-stone-200'} transition-all`}
+              className={`bg-white p-5 sm:p-8 rounded-3xl shadow-sm border ${isRevealed ? 'border-stone-300' : 'border-stone-200'} transition-all`}
             >
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <span className="text-[10px] font-black uppercase text-teal-600 tracking-[0.2em] mb-2 block">
                   Question {index + 1} &middot; {q.topic}
                 </span>
                 <div 
-                  className="prose max-w-none text-stone-900 text-lg leading-relaxed font-medium"
+                  className="prose max-w-none break-words text-stone-900 text-lg leading-relaxed font-medium"
                   dangerouslySetInnerHTML={{ __html: marked.parse(q.text) }}
                 />
               </div>
 
-              <div className="space-y-3 mt-6">
+              <div className="space-y-2 sm:space-y-3 mt-4 sm:mt-6">
                 {q.options.map(opt => {
                   const isOptChecked = userAnswers[q.id] === opt.id;
                   let extraClasses = 'border-stone-200 bg-white';
@@ -115,7 +115,7 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
                   return (
                     <label 
                       key={opt.id}
-                      className={`option-label flex items-center p-5 border-2 rounded-2xl relative ${extraClasses} ${isRevealed ? 'option-disabled cursor-default' : ''}`}
+                      className={`option-label flex items-center p-3.5 sm:p-5 border-2 rounded-2xl relative ${extraClasses} ${isRevealed ? 'option-disabled cursor-default' : ''}`}
                     >
                       <input 
                         type="radio" 
@@ -130,7 +130,7 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
                         {optionBoxContent}
                       </div>
                       <span 
-                        className="text-stone-800 font-medium prose-inline text-sm md:text-base"
+                        className="text-stone-800 font-medium prose-inline break-words min-w-0 flex-1 text-sm md:text-base"
                         dangerouslySetInnerHTML={{ __html: marked.parseInline(opt.text) }}
                       />
                     </label>
@@ -139,12 +139,12 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
               </div>
 
               {isRevealed && (
-                <div className="mt-8 p-6 bg-teal-50/50 border border-teal-100 rounded-2xl revealed">
+                <div className="mt-6 sm:mt-8 p-5 sm:p-6 bg-teal-50/50 border border-teal-100 rounded-2xl revealed">
                   <h4 className="text-xs font-black text-teal-800 mb-2 uppercase tracking-widest flex items-center gap-2">
                     Feedback
                   </h4>
                   <div 
-                    className="prose max-w-none text-sm text-teal-900 leading-relaxed font-medium"
+                    className="prose max-w-none break-words text-sm text-teal-900 leading-relaxed font-medium"
                     dangerouslySetInnerHTML={{ __html: marked.parse(q.feedback) }}
                   />
                 </div>
@@ -155,7 +155,7 @@ const QuizEngine = ({ questions, isLearningMode, setIsLearningMode }) => {
       </div>
 
       {!isSubmitted && (
-        <div className="mt-16 flex justify-center">
+        <div className="mt-10 sm:mt-16 flex justify-center">
           <button 
             onClick={submitQuiz}
             className="bg-stone-900 text-white px-10 py-4 rounded-2xl font-bold hover:bg-stone-800 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-stone-200 uppercase tracking-widest text-sm"

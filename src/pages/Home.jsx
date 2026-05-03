@@ -27,7 +27,7 @@ const Home = () => {
       prefix="Learning"
       showHomeButton={false}
     >
-      <div className="space-y-12">
+      <div className="space-y-8 sm:space-y-12">
         {Object.entries(categories).map(([category, items]) => (
           <section key={category} className="space-y-6">
             <h2 className="text-sm font-black text-stone-400 uppercase tracking-[0.2em] border-b border-stone-200 pb-2">

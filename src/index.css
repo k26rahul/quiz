@@ -17,6 +17,7 @@
     padding: 1.5rem !important;
     overflow-x: auto;
     border: 1px solid #292524;
+    max-width: 100%;
   }
 
   .prose code:not(pre code),
@@ -28,6 +29,7 @@
     font-weight: 600;
     font-size: 0.85em;
     border: 1px solid #ffedd5;
+    overflow-wrap: break-word;
   }
 
   .prose ul {
